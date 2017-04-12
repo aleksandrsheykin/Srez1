@@ -28,7 +28,7 @@ public class Follow extends Thread  {
                     } else {
                         digitArrayObject.flStop.set(true);
                         digitArrayObject.unlock();
-                        System.out.println("finish");
+                        System.out.println("finish with digin = "+i);
                         return;
                     }
                 }
