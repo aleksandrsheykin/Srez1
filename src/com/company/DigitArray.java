@@ -9,7 +9,6 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class DigitArray extends ReentrantLock {
     public CopyOnWriteArrayList<Integer> digitArray = new CopyOnWriteArrayList();
-    public ReentrantLock locker = new ReentrantLock();
     public Integer tiker = 0;
     public AtomicBoolean flStop = new AtomicBoolean(false);
 

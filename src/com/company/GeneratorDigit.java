@@ -10,28 +10,27 @@ public class GeneratorDigit extends Thread  {
 
     public GeneratorDigit(DigitArray digitArrayObject) {
         this.digitArrayObject = digitArrayObject;
-        s = new Thread(this, "GeneratorDigit");
+        s = new Thread(this);
         s.start();
     }
 
     @Override
     public void run() {
         try {
-            //digitArrayObject.locker.lock();
-            digitArrayObject.lock();
+            while(true) {
+                digitArrayObject.lock();
 
-            if (digitArrayObject.flStop.get()) {
-                //digitArrayObject.locker.unlock();
+                if (digitArrayObject.flStop.get()) {
+                    digitArrayObject.unlock();
+                    return;
+                }
+
+                digitArrayObject.tiker += 1;
+                int r = (int) (Math.random() * (99));
+                digitArrayObject.digitArray.set(r, digitArrayObject.digitArray.get(r) + 1);
                 digitArrayObject.unlock();
-                return;
+                Thread.sleep(1000);
             }
-
-            Thread.sleep(500);
-            digitArrayObject.tiker += 1;
-            int r = (int) (Math.random() * (99));
-            digitArrayObject.digitArray.set(r, digitArrayObject.digitArray.get(r)+1) ;
-            //digitArrayObject.locker.unlock();
-            digitArrayObject.unlock();
 
         } catch (InterruptedException e) {
             digitArrayObject.unlock();

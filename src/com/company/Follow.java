@@ -12,30 +12,30 @@ public class Follow extends Thread  {
 
     public Follow(DigitArray digitArrayObject) {
         this.digitArrayObject = digitArrayObject;
-        s = new Thread(this, "Follow");
+        s = new Thread(this);
         s.start();
     }
 
     @Override
     public void run() {
-        //digitArrayObject.locker.lock();
-        digitArrayObject.lock();
+        while (true) {
+            digitArrayObject.lock();
 
-        if (digitArrayObject.tiker%5 == 0) {
-            for (int i = 0; i < digitArrayObject.digitArray.size(); i++) {
-                if (digitArrayObject.digitArray.get(i) < 5) {
-                    System.out.println("digit " + i + " is " + digitArrayObject.digitArray.get(i));
-                } else {
-                    digitArrayObject.flStop.set(true);
-                    //digitArrayObject.locker.unlock();
-                    digitArrayObject.unlock();
-                    System.out.println("finish");
-                    return;
+            if (digitArrayObject.tiker % 5 == 0) {
+                for (int i = 0; i < digitArrayObject.digitArray.size(); i++) {
+                    if (digitArrayObject.digitArray.get(i) < 5) {
+                        System.out.println("digit " + i + " is " + digitArrayObject.digitArray.get(i));
+                    } else {
+                        digitArrayObject.flStop.set(true);
+                        digitArrayObject.unlock();
+                        System.out.println("finish");
+                        return;
+                    }
                 }
             }
-        }
+            Thread.yield();
 
-        //digitArrayObject.locker.unlock();
-        digitArrayObject.unlock();
+            digitArrayObject.unlock();
+        }
     }
 }
