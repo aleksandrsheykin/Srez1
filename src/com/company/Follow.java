@@ -18,7 +18,8 @@ public class Follow extends Thread  {
 
     @Override
     public void run() {
-        digitArrayObject.locker.lock();
+        //digitArrayObject.locker.lock();
+        digitArrayObject.lock();
 
         if (digitArrayObject.tiker%5 == 0) {
             for (int i = 0; i < digitArrayObject.digitArray.size(); i++) {
@@ -26,13 +27,15 @@ public class Follow extends Thread  {
                     System.out.println("digit " + i + " is " + digitArrayObject.digitArray.get(i));
                 } else {
                     digitArrayObject.flStop.set(true);
-                    digitArrayObject.locker.unlock();
+                    //digitArrayObject.locker.unlock();
+                    digitArrayObject.unlock();
                     System.out.println("finish");
                     return;
                 }
             }
         }
 
-        digitArrayObject.locker.unlock();
+        //digitArrayObject.locker.unlock();
+        digitArrayObject.unlock();
     }
 }
